@@ -1,0 +1,115 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="topnav">
+        <a class="active" href="/">Home</a>
+        <a href="/create">Create Users</a>
+    </div>
+
+    <div class="table_container">
+        <!-- <%= JSON.stringify(listUsers) %> -->
+        <div class="title">List Users</div>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Addreaa</th>
+                <th>City</th>
+                <th>Actions</th>
+            </tr>
+            <!-- <% for (var i=0; i < listUsers.length; i++) { %>
+                <tr>
+                    <td>
+                        <%= listUsers[i].id %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].Name %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].Email %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].Address %>
+                    </td>
+                    <td>
+                        <%= listUsers[i].City %>
+                    </td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+                <% } %> -->
+
+            <% listUsers.forEach(function(users) { %>
+                <tr>
+                    <td>
+                        <%= users.id %>
+                    </td>
+                    <td>
+                        <%= users.Name %>
+                    </td>
+                    <td>
+                        <%= users.Email %>
+                    </td>
+                    <td>
+                        <%= users.Address %>
+                    </td>
+                    <td>
+                        <%= users.City %>
+                    </td>
+                    <td>
+                        <a href="/edit/<%= users.id %>">Edit</a>
+                        <form action="/delete-user/<%= users.id %>" method="post">
+                            <button>Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }); %>
+        </table>
+    </div>
+
+    <!-- <div class="form-add-new">
+        <form action="/create-user" method="POST">
+            <fieldset>
+                <legend>New Uses</legend>
+
+                <div class="input-group">
+                    <label>Name: </label>
+                    <input type="text" name="myname" />
+                </div>
+
+                <div class="input-group">
+                    <label>Email: </label>
+                    <input type="text" name="email" />
+                </div>
+
+                <div class="input-group">
+                    <label>Address: </label>
+                    <input type="text" name="address" />
+                </div>
+
+                <div class="input-group">
+                    <label>City: </label>
+                    <input type="text" name="city" />
+                </div>
+
+                <div>
+                    <button>Save</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div> -->
+
+</body>
+
+</html>
