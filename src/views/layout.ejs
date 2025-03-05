@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <%= Trang Chủ %>
-    </title>
+    <title>Document</title>
     <link rel="stylesheet" href="/css/style.css">
-</head>
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css" </head>
 
 <body>
-    <%- include('partials/header') %>
-
+    <%- include('./partials/header') %>
         <main>
-            <%- body %>
+            <%- include('./body/home') %>
         </main>
-
-        <%- include('partials/footer') %>
+        <%- include('./partials/footer') %>
 </body>
 
 </html>
