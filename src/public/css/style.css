@@ -1,123 +1,83 @@
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+.navbar {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
 }
 
-html {
-    scroll-behavior: smooth;
-    font-family: Arial, Helvetica, sans-serif;
+.navbar_list {
+    list-style: none;
+    padding-left: 0;
+    margin: 4px 0 0 0;
+    display: flex;
 }
 
 
+.navbar_item {
+    margin: 0 8px;
+    position: relative;
+    min-height: 18px;
 
-.clear {
-    clear: both;
 }
 
-.text-white {
-    color: #fff !important;
+.navbar_item i {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 16px;
 }
 
-.text-center {
-    text-align: center !important;
+.navbar_item i:hover {
+    color: rgba(0, 0, 0, 0.4);
 }
 
-.pull-right {
-    float: right !important;
+.nav_logo img {
+    width: 50px;
+    height: 40px;
 }
 
-.mt-8 {
-    margin-top: 8px !important;
+
+/* body */
+
+.author {
+    display: flex;
 }
 
-.mt-16 {
-    margin-top: 16px !important;
+.container {
+    padding-top: 20px;
 }
 
-.mt-32 {
-    margin-top: 32px !important;
+.container-item {
+    border-radius: 10px;
 }
 
-.row {
-    margin-left: -8px;
-    margin-right: -8px;
-}
-
-.row::after {
-    content: "";
-    display: block;
-    clear: both;
-}
-
-.col {
-    float: left;
-    padding-left: 8px;
-    padding-right: 8px;
-}
-
-.col-third {
-    width: calc(100% / 3);
-}
-
-.col-half {
-    width: 50%;
-}
-
-.col-full {
+.container-item-img {
     width: 100%;
 }
 
-
-
-#header {
-    height: 46px;
-    background-color: white;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1;
+.avatar-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 
-.header-img {
-    height: 45px;
-    width: auto;
-}
-
-#nav {
-    display: inline-block;
-}
-
-
-#nav>li {
-    display: inline-block;
-}
-
-#nav li {
-    position: relative;
-}
-
-#nav>li>a {
-    color: #790707;
-    text-transform: uppercase;
-}
-
-#nav li a {
+.name-avatar {
+    font-size: 16px;
     text-decoration: none;
-    line-height: 46px;
-    padding: 0 30px;
-    display: block;
 }
 
-
-#nav>li:hover>a {
-    color: #000;
-    background-color: #ccc;
+.item-footer-like {
+    font-size: 16px;
+    text-decoration: none;
 }
 
+.container-item-footer {
+    display: flex;
+}
 
-
+.item-footer-like {
+    display: ;
+}
 
 #footer {
     padding: 64px 16px;
