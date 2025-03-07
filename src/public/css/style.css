@@ -39,45 +39,95 @@
 
 /* body */
 
-.author {
-    display: flex;
-}
-
 .container {
     padding-top: 20px;
 }
 
 .container-item {
+    display: block;
+    position: relative;
+    margin-top: 30px;
+    text-decoration: none;
+    background-color: var(--white-color);
     border-radius: 10px;
+    box-shadow: 0 5xp 8px 0 rgba(0, 0, 0, 0.1);
+    transition: transform ease-in 0.1s;
+    will-change: transform;
+}
+
+.container-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
 }
 
 .container-item-img {
     width: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
-.avatar-img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+.categories-item-img {
+    border-radius: 10px;
 }
 
-.name-avatar {
-    font-size: 16px;
-    text-decoration: none;
-}
+.container-item-name {
+    color: var(--text-color);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 2.5rem;
 
-.item-footer-like {
-    font-size: 16px;
-    text-decoration: none;
 }
 
 .container-item-footer {
     display: flex;
+    justify-content: space-between;
+    /* Căn đều hai bên */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+    width: 100%;
+    /* Đảm bảo phần tử cha rộng đủ để các phần tử con giãn cách */
+    padding: 20px 0px;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    /* Giúp căn giữa hình ảnh và tên */
+    text-decoration: none;
+    /* Bỏ gạch chân mặc định của thẻ <a> */
+    margin-left: 20px;
+}
+
+.avatar-img {
+    width: 40px;
+    /* Điều chỉnh kích thước ảnh */
+    height: 40px;
+    border-radius: 50%;
+    /* Làm tròn ảnh */
+    margin-right: 10px;
+    /* Khoảng cách giữa ảnh và tên */
+}
+
+.name-avatar {
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .item-footer-like {
-    display: ;
+    display: flex;
+    align-items: center;
+    color: #333;
+    font-size: 20px;
+    padding-right: 20px;
 }
+
+/* Màu sắc của icon */
+
+/* .item-footer-like {} */
 
 #footer {
     padding: 64px 16px;
@@ -106,3 +156,6 @@
 #footer .copyright a {
     color: rgba(0, 0, 0, 0.6);
 }
+
+
+/* Modal Search */
