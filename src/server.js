@@ -1,4 +1,5 @@
 require('dotenv').config();
+const mysql = require('mysql2/promise');
 const express = require('express'); //commonjs
 const configViewEngine = require('./config/viewEngine');
 const webRouter = require('./routes/web');
@@ -26,7 +27,7 @@ app.use('/', webRouter);
 
 // A simple SELECT query
 // connection.query(
-//     'SELECT * FROM Users u',
+//     'SELECT * FROM informations u',
 //     function (err, results, fields) {
 //         console.log('>>>Results', results); // results contains rows returned by server
 //         console.log('>>>Fields', fields); // fields contains extra meta data about results, if available

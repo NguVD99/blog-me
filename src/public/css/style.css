@@ -158,4 +158,29 @@
 }
 
 
-/* Modal Search */
+/* input */
+
+.form-add-new {
+    font-size: medium;
+    width: 1000px;
+    margin: auto;
+    padding-top: 100px;
+}
+
+.input-group {
+    height: auto;
+    margin: 20px;
+    width: 500px;
+}
+
+.input-item {
+    width: 300px;
+}
+
+
+
+button {
+    width: 100px;
+    cursor: pointer;
+    margin: 10px;
+}
