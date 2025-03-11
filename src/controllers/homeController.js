@@ -9,8 +9,9 @@ const getHomepage = async (req, res) => {
     return res.render('home.ejs', { listUsers: results });
 }
 
-const getPopularpage = (req, res) => {
-    res.render('popular.ejs')
+const getPopularpage = async (req, res) => {
+    let results = await getAllUsers();
+    return res.render('popular.ejs', { listUsers: results });
 }
 
 const getCategoriespage = (req, res) => {
@@ -26,10 +27,11 @@ const postCreateUser = async (req, res) => {
 
     let myif = req.body.myinformation
     let image = req.body.myimage
+    let linkdoc = req.body.mydoc
 
     // let { name, email, address, city } = req.body;
 
-    console.log("nameInformation = ", myif, "image = ", image)
+    console.log("nameInformation = ", myif, "image = ", image, "linkDocument", linkdoc)
 
     // Cach 1
     // connection.query(
@@ -46,7 +48,7 @@ const postCreateUser = async (req, res) => {
 
     // cach 2
     let [results, fields] = await connection.query(
-        `INSERT INTO information (nameInformation, image) VALUES (?, ?)`, [myif, image]
+        `INSERT INTO information (nameInformation, image, linkDocument) VALUES (?, ?, ?)`, [myif, image, linkdoc]
     );
 
     // res.render('home.ejs');
@@ -60,6 +62,12 @@ const getLoginpage = (req, res) => {
 }
 
 
+const getRegisterpage = (req, res) => {
+    res.render('register.ejs')
+}
+
+
+
 module.exports = {
     getHomepage,
     getPopularpage,
@@ -67,4 +75,5 @@ module.exports = {
     getCreatepage,
     postCreateUser,
     getLoginpage,
+    getRegisterpage
 }

@@ -20,8 +20,13 @@
                 <div class="grid__row">
                     <% listUsers.forEach(function(information) { %>
                         <div class="grid__column-3">
-                            <a class="container-item" href="">
+                            <a class="container-item" href="<%= information.linkDocument %>">
+                                <div class="bg-category">
+                                    <h2 class="bg-category-name">Kinh nghiệm lập trình</h2>
+                                </div>
+                                <!-- <div class="bg-container"> -->
                                 <img class="container-item-img" src="<%= information.image %>" alt="">
+
                                 <h2 class="container-item-name">
                                     <%= information.nameInformation %>
                                 </h2>
@@ -34,6 +39,8 @@
                                         <i class="ti-heart"></i>
                                     </div>
                                 </div>
+
+                                <!-- </div> -->
                             </a>
                         </div>
                         <% }); %>

@@ -9,21 +9,27 @@
     <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css" <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/login.css" />
-    <title>Đăng Nhập </title>
+    <title>Đăng ký</title>
 </head>
 
 <body>
     <%- include('./partials/header') %>
         <div class="main">
             <form action="" method="POST" class="form" id="form-1">
-                <h3 class="heading">Đăng nhập</h3>
+                <h3 class="heading">Đăng ký thành viên mới</h3>
                 <p class="desc">Cùng nhau học lập trình ❤️</p>
 
                 <div class="spacer"></div>
 
                 <div class="form-group">
-                    <label for="fullname" class="form-lable">Tên đầy đủ</label>
+                    <label for="fullname" class="form-lable">Tên đăng nhập</label>
 
+                    <input type="text" name="name" id="fullname" placeholder="VD: VDN123" class="from-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="fullname" class="form-lable">Tên đầy đủ</label>
                     <input type="text" name="fullname" id="fullname" placeholder="VD: Vũ Duy Ngự"
                         class="from-control" />
                     <span class="form-message"></span>
@@ -42,25 +48,25 @@
                     <span class="form-message"></span>
                 </div>
 
-                <p class="desc">Chưa có tài khoản? <a class="active" href="/register">Đăng ký</a></p>
+                <!-- <p class="desc">Chưa có tài khoản? <a class="active" href="/register">Đăng ký</a></p>
 
-                <p class="desc">Quên mật khẩu? <a href="">Lấy lại mật khẩu</a></p>
+                <p class="desc">Quên mật khẩu? <a href="">Lấy lại mật khẩu</a></p> -->
 
 
-                <!-- <div class="form-group">
+                <div class="form-group">
                     <label for="password_confirmation" class="form-lable">Nhập lại mật khẩu</label>
                     <input type="password" name="password_confirmation" id="password_confirmation"
                         placeholder="Nhập lại mật khẩu" class="from-control" />
                     <span class="form-message"></span>
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="avatar" class="form-lable">Ảnh đại diện</label>
                     <input type="file" name="avatar" id="avatar" class="from-control" />
                     <span class="form-message"></span>
                 </div> -->
 
-                <button class="form-submit">Đăng nhập</button>
+                <button class="form-submit">Đăng Ký</button>
             </form>
         </div>
 

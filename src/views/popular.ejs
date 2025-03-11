@@ -12,14 +12,21 @@
 
 <body>
     <%- include('./partials/header') %>
-        <main>
-            <div id="main-container" class="container">
-                <div class="grid">
-                    <div class="grid__row">
+        <div id="main-container" class="container">
+            <div class="grid">
+                <div class="grid__row">
+                    <% listUsers.forEach(function(information) { %>
                         <div class="grid__column-3">
-                            <a class="container-item" href="">
-                                <img class="container-item-img" src="/images/ktnt.png" alt="">
-                                <h2 class="container-item-name">Kiến thức nhập môn IT</h2>
+                            <a class="container-item" href="<%= information.linkDocument %>">
+                                <div class="bg-category">
+                                    <h2 class="bg-category-name">Kinh nghiệm lập trình</h2>
+                                </div>
+                                <!-- <div class="bg-container"> -->
+                                <img class="container-item-img" src="<%= information.image %>" alt="">
+
+                                <h2 class="container-item-name">
+                                    <%= information.nameInformation %>
+                                </h2>
                                 <div class="container-item-footer">
                                     <div class="author">
                                         <img class="avatar-img" src="/images/avatar.png" alt="">
@@ -29,88 +36,17 @@
                                         <i class="ti-heart"></i>
                                     </div>
                                 </div>
+
+                                <!-- </div> -->
                             </a>
                         </div>
-                        <div class="grid__column-3">
-                            <a class="container-item" href="">
-                                <img class="container-item-img" src="/images/ktnt.png" alt="">
-                                <h2 class="container-item-name">Kiến thức nhập môn IT</h2>
-                                <div class="container-item-footer">
-                                    <div class="author">
-                                        <img class="avatar-img" src="/images/avatar.png" alt="">
-                                        <div class="name-avatar">Vũ Duy Ngự</div>
-                                    </div>
-                                    <div class="item-footer-like">
-                                        <i class="ti-heart"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a class="container-item" href="">
-                                <img class="container-item-img" src="/images/ktnt.png" alt="">
-                                <h2 class="container-item-name">Kiến thức nhập môn IT</h2>
-                                <div class="container-item-footer">
-                                    <div class="author">
-                                        <img class="avatar-img" src="/images/avatar.png" alt="">
-                                        <div class="name-avatar">Vũ Duy Ngự</div>
-                                    </div>
-                                    <div class="item-footer-like">
-                                        <i class="ti-heart"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a class="container-item" href="">
-                                <img class="container-item-img" src="/images/ktnt.png" alt="">
-                                <h2 class="container-item-name">Kiến thức nhập môn IT</h2>
-                                <div class="container-item-footer">
-                                    <div class="author">
-                                        <img class="avatar-img" src="/images/avatar.png" alt="">
-                                        <div class="name-avatar">Vũ Duy Ngự</div>
-                                    </div>
-                                    <div class="item-footer-like">
-                                        <i class="ti-heart"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a class="container-item" href="">
-                                <img class="container-item-img" src="/images/ktnt.png" alt="">
-                                <h2 class="container-item-name">Kiến thức nhập môn IT</h2>
-                                <div class="container-item-footer">
-                                    <div class="author">
-                                        <img class="avatar-img" src="/images/avatar.png" alt="">
-                                        <div class="name-avatar">Vũ Duy Ngự</div>
-                                    </div>
-                                    <div class="item-footer-like">
-                                        <i class="ti-heart"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="grid__column-3">
-                            <a class="container-item" href="">
-                                <img class="container-item-img" src="/images/ktnt.png" alt="">
-                                <h2 class="container-item-name">Kiến thức nhập môn IT</h2>
-                                <div class="container-item-footer">
-                                    <div class="author">
-                                        <img class="avatar-img" src="/images/avatar.png" alt="">
-                                        <div class="name-avatar">Vũ Duy Ngự</div>
-                                    </div>
-                                    <div class="item-footer-like">
-                                        <i class="ti-heart"></i>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                        <% }); %>
                 </div>
             </div>
-        </main>
+        </div>
+
         <%- include('./partials/footer') %>
+
 
             <div class="modal">
                 <div class="modal-overlay">

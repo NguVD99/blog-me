@@ -56,9 +56,17 @@
 }
 
 .container-item:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.1);
 }
+
+/* .full-link {
+    display: block;
+}
+
+.full-link:hover {
+    opacity: 0.95;
+} */
 
 .container-item-img {
     width: 100%;
@@ -72,6 +80,7 @@
 .categories-item-img {
     border-radius: 10px;
 }
+
 
 .container-item-name {
     color: var(--text-color);
@@ -126,6 +135,28 @@
 }
 
 /* Màu sắc của icon */
+
+.bg-category {
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    background-color: #e76208;
+    border-radius: 20px;
+}
+
+.bg-category h2 {
+    text-decoration: none;
+    font-size: 15px;
+    color: #fff;
+    display: inline-block;
+    padding: 4px 25px;
+    /* vertical-align: top; */
+    border-radius: 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
 
 /* .item-footer-like {} */
 
