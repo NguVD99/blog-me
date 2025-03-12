@@ -1,6 +1,8 @@
 require('dotenv').config();
 const mysql = require('mysql2/promise');
 const express = require('express'); //commonjs
+const bodyParser = require('body-parser');
+const bcrypt = require('bcryptjs');
 const configViewEngine = require('./config/viewEngine');
 const webRouter = require('./routes/web');
 const connection = require('./config/database');

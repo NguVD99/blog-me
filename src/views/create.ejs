@@ -8,13 +8,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/login.css" />
     <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css" </head>
 
 <body>
 
     <%- include('./partials/header') %>
 
-        <div class="form-add-new">
+        <!-- <div class="form-add-new">
             <form action="/create-user" method="POST">
                 <fieldset>
                     <legend>Thêm Bài Mới</legend>
@@ -33,14 +34,42 @@
                         <label>Link Document: </label>
                         <input class="input-item" type="text" name="mydoc" />
                     </div>
-
-
-
                     <div>
                         <button>Save</button>
                     </div>
 
                 </fieldset>
+            </form>
+        </div> -->
+
+        <div class="main">
+            <form action="/create-user" method="POST" class="form">
+                <h3 class="heading">Thêm bài học mới</h3>
+                <p class="desc">Cùng nhau học lập trình ❤️</p>
+
+                <div class="spacer"></div>
+
+                <div class="form-group">
+                    <label for="myifm" class="form-lable">Tên Bài Học Mới</label>
+                    <input type="text" name="myinformation" id="myifm" placeholder="VD: Học lập trình "
+                        class="from-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="myimg" class="form-lable">Link Ảnh</label>
+                    <input type="text" name="myimage" id="myimg" placeholder="VD: https//:abcd.png "
+                        class="from-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="mydo" class="form-lable">Link Thông Tin Bài</label>
+                    <input type="text" name="mydoc" id="mydo" placeholder="VD: https//: ... " class="from-control" />
+                    <span class="form-message"></span>
+                </div>
+
+                <button class="form-submit">Save</button>
             </form>
         </div>
 
