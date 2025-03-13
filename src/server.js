@@ -18,6 +18,9 @@ const hostname = process.env.HOST_NAME;
 app.use(express.json()) // for json
 app.use(express.urlencoded({ extended: true })) // for form data
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // config template engine
 configViewEngine(app);
 

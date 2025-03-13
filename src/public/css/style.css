@@ -4,6 +4,8 @@
     justify-content: space-between;
     align-items: center;
     margin: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
 .navbar_list {
@@ -32,8 +34,10 @@
 }
 
 .nav_logo img {
-    width: 50px;
-    height: 40px;
+    width: auto;
+    max-width: 70px;
+    height: auto;
+    max-height: 60px;
 }
 
 
@@ -186,4 +190,36 @@
 
 #footer .copyright a {
     color: rgba(0, 0, 0, 0.6);
+}
+
+.slide-show {
+    border-radius: 15px;
+
+}
+
+
+.center-wrapper {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide-show {
+    width: 900px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.slide-show .carousel {
+    border-radius: 12px;
+    overflow: hidden;
+    max-height: 400px;
+}
+
+.slide-show img {
+    height: 400px;
+    object-fit: cover;
+    width: 100%;
+    display: block;
 }

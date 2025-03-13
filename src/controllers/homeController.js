@@ -63,6 +63,37 @@ const getLoginpage = (req, res) => {
     res.render('login.ejs')
 }
 
+const postLoginpage = async (req, res) => {
+    const { loginname, password } = req.body
+    console.log(req.body)
+
+    try {
+        const [login] = await connection.query(
+            `SELECT * FROM listUser WHERE loginname = ?`,
+            [loginname]
+        );
+
+        if (login.length === 0) {
+            return res.send("Tài khoản không tồn tại")
+        }
+
+        const user = login[0];
+
+        const compare = await bcrypt.compare(password, user.password);
+
+        if (compare) {
+            return res.send("Chào mừng bạn đến với trang web")
+        } else {
+            return res.send("Mật khẩu không chính ")
+        }
+
+
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('LỖI MÁY CHỦ KHI ĐĂNG NHẬP');
+    }
+}
+
 
 const getRegisterpage = (req, res) => {
     res.render('register.ejs')
@@ -71,67 +102,41 @@ const getRegisterpage = (req, res) => {
 const postRegisterpage = async (req, res) => {
     // console.log('>>>> req.body ', req.body)
 
-    const myloginname = req.body.loginname
-    const myfullname = req.body.fullname
-    const myemail = req.body.email
-    const mypassword = req.body.password
+    // const myloginname = req.body.loginname
+    // const myfullname = req.body.fullname
+    // const myemail = req.body.email
+    // const mypassword = req.body.password
 
-    // let { name, email, address, city } = req.body;
+    const { loginname, fullname, email, password } = req.body
 
-    console.log("loginname = ", myloginname, "fullname = ", myfullname, "email = ", myemail, "password = ", mypassword)
+    console.log(req.body)
 
-    connection.query('SELECT * FROM listUser WHERE email = ?', [myemail], async (err, results) => {
-        if (err) return res.status(500).send('Lỗi khi kiểm tra email');
+    // console.log("loginname = ", myloginname, "fullname = ", myfullname, "email = ", myemail, "password = ", mypassword)
 
-        if (results.length > 0) {
-            return res.status(400).send('Email đã tồn tại');
+    const checkSql = `SELECT * FROM listUser WHERE email = "${email}"`;
+
+    const [result] = await connection.query(checkSql);
+    if (result.length > 0) {
+        return res.send('Email đã tồn tại');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    try {
+        const [data] = await connection.query(
+            `INSERT INTO listUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)`,
+            [loginname, fullname, email, hashedPassword]
+        );
+
+        if (data.affectedRows > 0) {
+            return res.redirect('/');
+        } else {
+            return res.status(400).send('TẠO TÀI KHOẢN THẤT BẠI');
         }
-
-        try {
-            const hashedPassword = await bcrypt.hash(mypassword, 10);
-
-            connection.query(
-                'INSERT INTO llistUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)',
-                [myloginname, myfullname, myemail, hashedPassword],
-                (err, result) => {
-                    if (err) return res.status(500).send('Lỗi khi tạo tài khoản');
-                    res.status(201).send('Đăng ký thành công!');
-                }
-            );
-        } catch (error) {
-            res.status(500).send('Lỗi server trong quá trình mã hóa');
-        }
-    });
-
-
-    // // cach 2
-    // let [results, fields] = await connection.query(
-    //     `INSERT INTO listUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)`, [myloginname, myfullname, myemail, mypassword]
-    // );
-
-    // // res.render('home.ejs');
-    // // res.send('Create User');
-    // res.redirect('/');
-
-    // connection.query('SELECT * FROM listUser WHERE email = ?', [myemail], async (err, results) => {
-    //     if (err) return res.status(500).send(err);
-
-    //     if (results.length > 0) {
-    //         return res.status(400).send('Email đã tồn tại');
-    //     }
-
-    // })
-
-    // const hashedPassword = await bcrypt.hash(mypassword, 10);
-
-    // let [results, fields] = await connection.query(
-    //     `INSERT INTO listUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)`, [myloginname, myfullname, myemail, hashedPassword]
-    // );
-
-    // // res.render('home.ejs');
-    // // res.send('Create User');
-    // res.redirect('/');
-
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send('LỖI MÁY CHỦ KHI TẠO TÀI KHOẢN');
+    }
 
 }
 
@@ -145,5 +150,6 @@ module.exports = {
     postCreateUser,
     getLoginpage,
     getRegisterpage,
-    postRegisterpage
+    postRegisterpage,
+    postLoginpage
 }
