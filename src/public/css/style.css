@@ -24,7 +24,7 @@
 }
 
 .navbar_item i {
-    font-size: 24px;
+    font-size: 30px;
     color: rgba(0, 0, 0, 0.6);
     padding: 16px;
 }
@@ -170,7 +170,7 @@
 }
 
 #footer .socials-list {
-    font-size: 24px;
+    font-size: 50px;
 }
 
 #footer .socials-list a {
@@ -186,6 +186,7 @@
 #footer .copyright {
     margin-top: 15px;
     color: rgba(0, 0, 0, 0.6);
+    font-size: 25px;
 }
 
 #footer .copyright a {
