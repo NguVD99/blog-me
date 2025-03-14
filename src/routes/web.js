@@ -1,5 +1,5 @@
 const express = require('express');
-const { getHomepage, getPopularpage, getCategoriespage, getCreatepage, postCreateUser, getLoginpage, getRegisterpage, postRegisterpage, postLoginpage } = require('../controllers/homeController')
+const { getHomepage, getPopularpage, getCategoriespage, getCreatepage, postCreateUser, getLoginpage, getRegisterpage, postRegisterpage, postLoginpage, getListcategory } = require('../controllers/homeController')
 const router = express.Router();
 
 
@@ -8,6 +8,8 @@ router.get('/', getHomepage)
 router.get('/popular', getPopularpage)
 
 router.get('/categories', getCategoriespage)
+
+router.get('/categories/:type', getListcategory)
 
 router.get('/create', getCreatepage)
 

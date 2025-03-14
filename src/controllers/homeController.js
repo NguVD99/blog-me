@@ -20,44 +20,93 @@ const getCategoriespage = (req, res) => {
     res.render('categories.ejs')
 }
 
+const getListcategory = async (req, res) => {
+    const category = req.params.type;
+
+    const categoryLink = {
+        language: 'Ngôn Ngữ',
+        trick: 'Thủ Thuật',
+        database: 'Data Base'
+    };
+
+    const categoryName = categoryLink[category] || '';
+
+    try {
+        const [results] = await connection.execute(
+            'SELECT * FROM information WHERE linkCategorie = ?',
+            [categoryName]
+        );
+        res.render('categoryList', { listUsers: results });
+    } catch (err) {
+        console.error('❌ Lỗi truy vấn:', err);
+        res.status(500).send('Lỗi truy vấn cơ sở dữ liệu');
+    }
+};
+
 const getCreatepage = (req, res) => {
     res.render('create.ejs')
 }
 
+// const postCreateUser = async (req, res) => {
+//     // console.log('>>>> req.body ', req.body)
+
+//     let myif = req.body.myinformation
+//     let image = req.body.myimage
+//     let linkdoc = req.body.mydoc
+//     let linkctg = req.body.linkcategory
+
+//     // let { name, email, address, city } = req.body;
+
+//     console.log("nameInformation = ", myif, "image = ", image, "linkDocument", linkdoc, "LinkCategory = ", linkctg)
+
+//     // Cach 1
+//     // connection.query(
+//     //     `INSERT INTO Users (Name, Email, Address, City)
+//     //     VALUES (?, ?, ?, ?);
+//     //     `,
+//     //     [name, email, address, city],
+//     //     function (err, results) {
+//     //         console.log(results);
+//     //         res.send('Create User')
+//     //     }
+//     // );
+
+
+//     // cach 2
+//     let [results, fields] = await connection.query(
+//         `INSERT INTO information (nameInformation, image, linkDocument, linkCategorie) VALUES (?, ?, ?, ?)`, [myif, image, linkdoc, linkctg]
+//     );
+
+//     // res.render('home.ejs');
+//     // res.send('Create User');
+//     res.redirect('/');
+
+// }
+
 const postCreateUser = async (req, res) => {
-    // console.log('>>>> req.body ', req.body)
+    const { myinformation, myimage, mydoc, linkcategory } = req.body;
 
-    let myif = req.body.myinformation
-    let image = req.body.myimage
-    let linkdoc = req.body.mydoc
+    // Map ngược từ tên danh mục sang route
+    const categoryRouteMap = {
+        'Ngôn Ngữ': 'language',
+        'Thủ Thuật': 'trick',
+        'Data Base': 'database'
+    };
 
-    // let { name, email, address, city } = req.body;
+    try {
+        await connection.query(
+            `INSERT INTO information (nameInformation, image, linkDocument, linkCategorie)
+             VALUES (?, ?, ?, ?)`,
+            [myinformation, myimage, mydoc, linkcategory]
+        );
 
-    console.log("nameInformation = ", myif, "image = ", image, "linkDocument", linkdoc)
-
-    // Cach 1
-    // connection.query(
-    //     `INSERT INTO Users (Name, Email, Address, City)
-    //     VALUES (?, ?, ?, ?);
-    //     `,
-    //     [name, email, address, city],
-    //     function (err, results) {
-    //         console.log(results);
-    //         res.send('Create User')
-    //     }
-    // );
-
-
-    // cach 2
-    let [results, fields] = await connection.query(
-        `INSERT INTO information (nameInformation, image, linkDocument) VALUES (?, ?, ?)`, [myif, image, linkdoc]
-    );
-
-    // res.render('home.ejs');
-    // res.send('Create User');
-    res.redirect('/');
-
-}
+        const redirectRoute = categoryRouteMap[linkcategory] || '';
+        res.redirect(`/categories/${redirectRoute}`);
+    } catch (err) {
+        console.error('❌ Lỗi khi thêm bài học:', err);
+        res.status(500).send('Không thể thêm bài học!');
+    }
+};
 
 const getLoginpage = (req, res) => {
     res.render('login.ejs')
@@ -142,6 +191,8 @@ const postRegisterpage = async (req, res) => {
 
 
 
+
+
 module.exports = {
     getHomepage,
     getPopularpage,
@@ -151,5 +202,6 @@ module.exports = {
     getLoginpage,
     getRegisterpage,
     postRegisterpage,
-    postLoginpage
+    postLoginpage,
+    getListcategory
 }

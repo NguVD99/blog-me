@@ -24,9 +24,20 @@
                         <% listUsers.forEach(function(information) { %>
                             <div class="grid__column-3">
                                 <div class="bg-category">
-                                    <a href="">
-                                        <h2 class="bg-category-name">Kinh nghiệm lập trình</h2>
-                                    </a>
+                                    <% let linkPath='' ; %>
+
+                                        <% if (information.linkCategorie==='Ngôn Ngữ' ) { %>
+                                            <% linkPath='/categories/language' ; %>
+                                                <% } else if (information.linkCategorie==='Thủ Thuật' ) { %>
+                                                    <% linkPath='/categories/trick' ; %>
+                                                        <% } else if (information.linkCategorie==='Data Base' ) { %>
+                                                            <% linkPath='/categories/database' ; %>
+                                                                <% } %>
+                                                                    <a href="<%= linkPath %>">
+                                                                        <h2 class="bg-category-name">
+                                                                            <%= information.linkCategorie %>
+                                                                        </h2>
+                                                                    </a>
                                 </div>
                                 <a class="container-item" href="<%= information.linkDocument %>">
                                     <!-- <div class="bg-container"> -->
