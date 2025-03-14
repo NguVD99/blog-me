@@ -23,10 +23,12 @@
                     <div class="grid__row">
                         <% listUsers.forEach(function(information) { %>
                             <div class="grid__column-3">
-                                <a class="container-item" href="<%= information.linkDocument %>">
-                                    <div class="bg-category">
+                                <div class="bg-category">
+                                    <a href="">
                                         <h2 class="bg-category-name">Kinh nghiệm lập trình</h2>
-                                    </div>
+                                    </a>
+                                </div>
+                                <a class="container-item" href="<%= information.linkDocument %>">
                                     <!-- <div class="bg-container"> -->
                                     <img class="container-item-img" src="<%= information.image %>" alt="">
 
