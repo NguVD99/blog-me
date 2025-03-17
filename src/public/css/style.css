@@ -82,6 +82,29 @@
 
 .categories-item-img {
     border-radius: 10px;
+    height: auto;
+}
+
+.container-item-timesee {
+    color: var(--text-color);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 2rem;
+    padding: 20px 0 0 0;
+}
+
+.time {
+    margin-right: 20px;
+}
+
+.categories-item-name {
+    color: var(--primary-color);
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    padding: 20px 0px;
 }
 
 
@@ -91,7 +114,7 @@
     text-align: center;
     justify-content: center;
     font-size: 2.5rem;
-
+    padding: 10px 5px;
 }
 
 .container-item-footer {
