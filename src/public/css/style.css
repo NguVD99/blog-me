@@ -251,3 +251,51 @@
     width: 100%;
     display: block;
 }
+
+.post{
+    width: 1500px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.name-infor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    font-size: 2.5rem;
+}
+
+.img-infor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+  }
+  
+  .img-infor img {
+    max-width: 80%;
+    height: auto;
+    border-radius: 8px; /* nếu muốn đẹp hơn */
+  }
+
+.p-infor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.link-doc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.title {
+    text-align: center;
+    margin: 30px 0;
+    font-size: 2.5rem;
+    font-weight: bold;
+}

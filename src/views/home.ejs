@@ -38,18 +38,18 @@
                                         </h2>
                                     </a>
                                 </div>
-                                <a class="container-item" href="<%= information.linkDocument %>">
+                                <a class="container-item" href="/post/<%= information.id %>">
                                     <!-- <div class="bg-container"> -->
                                     <img class="container-item-img" src="<%= information.image %>" alt="">
                                     
                                     <div class="container-item-timesee">
                                         <small class="time">
                                             <i class="ti-timer"></i>
-                                             2 tháng trước
+                                            <%= information.timeAgo %>
                                         </small>
                                         <small>
                                             <i class="ti-eye"></i>
-                                             47
+                                            <%= information.views %>
                                         </small>
                                     </div>
                                     <h2 class="container-item-name">

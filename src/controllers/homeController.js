@@ -4,16 +4,53 @@ const connection = require('../config/database');
 const { getAllUsers } = require('../services/CRUDService');
 
 
+function timeAgo(date) {
+    const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
+    const intervals = [
+      { label: 'năm', seconds: 31536000 },
+      { label: 'tháng', seconds: 2592000 },
+      { label: 'ngày', seconds: 86400 },
+      { label: 'giờ', seconds: 3600 },
+      { label: 'phút', seconds: 60 },
+      { label: 'giây', seconds: 1 },
+    ];
+    for (const i of intervals) {
+      const count = Math.floor(seconds / i.seconds);
+      if (count >= 1) return `${count} ${i.label} trước`;
+    }
+    return 'vừa xong';
+  }
 
 
 const getHomepage = async (req, res) => {
     let results = await getAllUsers();
+
+    results = results.map(user => {
+        return {
+            ...user,
+            timeAgo: timeAgo(user.createdAt)
+        };
+    });
+
     return res.render('home.ejs', { listUsers: results });
 }
 
 const getPopularpage = async (req, res) => {
-    let results = await getAllUsers();
-    return res.render('popular.ejs', { listUsers: results });
+    try {
+        const [results] = await connection.execute(
+          `SELECT * FROM information ORDER BY views DESC LIMIT 10`
+        );
+    
+        const listUsers = results.map(post => ({
+          ...post,
+          timeAgo: timeAgo(post.createdAt),
+        }));
+    
+        res.render('popular.ejs', { listUsers });
+      } catch (err) {
+        console.error('❌ Lỗi trang popular:', err);
+        res.status(500).send('Lỗi máy chủ');
+      }
 }
 
 const getCategoriespage = (req, res) => {
@@ -36,7 +73,13 @@ const getListcategory = async (req, res) => {
             'SELECT * FROM information WHERE linkCategorie = ?',
             [categoryName]
         );
-        res.render('categoryList', { listUsers: results });
+
+        const listUsers = results.map(item => ({
+            ...item,
+            timeAgo: timeAgo(item.createdAt)
+        }));
+
+        res.render('categoryList', { listUsers });
     } catch (err) {
         console.error('❌ Lỗi truy vấn:', err);
         res.status(500).send('Lỗi truy vấn cơ sở dữ liệu');
@@ -189,6 +232,58 @@ const postRegisterpage = async (req, res) => {
 
 }
 
+const getDetail = async (req, res) => {
+    let results = await getAllUsers();
+
+    results = results.map(user => {
+        return {
+            ...user,
+            timeAgo: timeAgo(user.createdAt)
+        };
+    });
+
+    return res.render('home.ejs', { listUsers: results });
+}
+
+const getPostDetail = async (req, res) => {
+    const postId = req.params.id;
+
+    // console.log(postId)
+  
+    try {
+      // Kiểm tra ID
+      if (!postId || isNaN(postId)) {
+        return res.status(400).send('❌ ID không hợp lệ');
+      }
+  
+      // Kiểm tra bài viết tồn tại
+      const [rows] = await connection.execute(
+        'SELECT * FROM information WHERE id = ?',
+        [postId]
+      );
+  
+      if (rows.length === 0) {
+        return res.status(404).send('❌ Bài viết không tồn tại');
+      }
+  
+      const post = rows[0];
+  
+      // Tăng lượt xem
+      await connection.execute(
+        'UPDATE information SET views = views + 1 WHERE id = ?',
+        [postId]
+      );
+  
+    //   // Gắn timeAgo nếu muốn
+    // //   post.timeAgo = timeAgo(post.createdAt);
+  
+      // Render
+      res.render('postDetail.ejs', { post });
+    } catch (err) {
+      console.error('❌ Lỗi getPostDetail:', err);
+      res.status(500).send('Lỗi máy chủ');
+    }
+  };
 
 
 
@@ -203,5 +298,7 @@ module.exports = {
     getRegisterpage,
     postRegisterpage,
     postLoginpage,
-    getListcategory
+    getListcategory,
+    getPostDetail,
+    getDetail
 }
