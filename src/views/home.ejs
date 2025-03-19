@@ -25,23 +25,23 @@
                             <div class="grid__column-3">
                                 <div class="bg-category">
                                     <% let linkPath='' ; %>
-                                    <% if (information.linkCategorie==='Ngôn Ngữ' ) { %>
-                                    <% linkPath='/categories/language' ; %>
-                                    <% } else if (information.linkCategorie==='Thủ Thuật' ) { %>
-                                    <% linkPath='/categories/trick' ; %>
-                                    <% } else if (information.linkCategorie==='Data Base' ) { %>
-                                    <% linkPath='/categories/database' ; %>
-                                    <% } %>
-                                    <a href="<%= linkPath %>">
-                                        <h2 class="bg-category-name">
-                                            <%= information.linkCategorie %>
-                                        </h2>
-                                    </a>
+                                        <% if (information.linkCategorie==='Ngôn Ngữ' ) { %>
+                                            <% linkPath='/categories/language' ; %>
+                                                <% } else if (information.linkCategorie==='Thủ Thuật' ) { %>
+                                                    <% linkPath='/categories/trick' ; %>
+                                                        <% } else if (information.linkCategorie==='Data Base' ) { %>
+                                                            <% linkPath='/categories/database' ; %>
+                                                                <% } %>
+                                                                    <a href="<%= linkPath %>">
+                                                                        <h2 class="bg-category-name">
+                                                                            <%= information.linkCategorie %>
+                                                                        </h2>
+                                                                    </a>
                                 </div>
                                 <a class="container-item" href="/post/<%= information.id %>">
                                     <!-- <div class="bg-container"> -->
                                     <img class="container-item-img" src="<%= information.image %>" alt="">
-                                    
+
                                     <div class="container-item-timesee">
                                         <small class="time">
                                             <i class="ti-timer"></i>
@@ -76,14 +76,7 @@
             <%- include('./partials/footer') %>
 
                 <!-- Modal tim kiem-->
-                <div class="modal">
-                    <div class="modal-overlay">
-
-                    </div>
-                    <div class="modal-body">
-                        <div class="modal-inner"></div>
-                    </div>
-                </div>
+            <%- include('./partials/modalSearch') %>
 
 </body>
 
