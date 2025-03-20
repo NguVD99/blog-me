@@ -10,7 +10,8 @@ const { getHomepage,
         postLoginpage,
         getListcategory,
         getPostDetail,
-        getDetail
+        getDetail,
+        getSearchPage
     } = require('../controllers/homeController')
 const router = express.Router();
 
@@ -39,6 +40,8 @@ router.get('/post', getDetail);
 
 
 router.get('/post/:id', getPostDetail);
+
+router.get('/search', getSearchPage);
 
 
 

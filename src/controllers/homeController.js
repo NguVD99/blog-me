@@ -283,9 +283,34 @@ const getPostDetail = async (req, res) => {
       console.error('❌ Lỗi getPostDetail:', err);
       res.status(500).send('Lỗi máy chủ');
     }
-  };
+};
 
 
+
+
+const getSearchPage = async (req, res) => {
+    const keyword = req.query.keyword || '';
+
+    try {
+        const [results] = await connection.execute(
+            `SELECT * FROM information WHERE nameInformation LIKE ?`,
+            [`%${keyword}%`]
+        );
+
+        // console.log(results)
+
+        const listUsers = results.map(item => ({
+            ...item,
+            timeAgo: timeAgo(item.createdAt)
+        }));
+        console.log(listUsers )
+        res.render('search.ejs', { listUsers });
+
+    } catch (err) {
+        console.error('❌ Lỗi tìm kiếm:', err);
+        res.status(500).send('Lỗi khi tìm kiếm');
+    }
+};
 
 
 module.exports = {
@@ -300,5 +325,6 @@ module.exports = {
     postLoginpage,
     getListcategory,
     getPostDetail,
-    getDetail
+    getDetail,
+    getSearchPage
 }

@@ -1,0 +1,90 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/js/main.js">
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css"> 
+</head>
+
+<body>
+    <!-- <%= JSON.stringify(listUsers) %> -->
+
+    <%- include('./partials/header') %>
+        <h2 class="title">Kết Quả Tìm Kiếm</h2>
+
+  <!-- Hiển thị từng thông tin như home.ejs -->
+        <div id="main-container" class="container">
+            <div class="grid">
+                <div class="grid__row">
+                    <% if (listUsers.length === 0) { %>
+                      <p>Không tìm thấy kết quả nào.</p>
+                    <% } else { %>
+                      <% listUsers.forEach(function(information) { %>
+                        <!-- hiển thị từng kết quả -->
+                        <div class="grid__column-3">
+                            <div class="bg-category">
+                                <% let linkPath='' ; %>
+                                    <% if (information.linkCategorie==='Ngôn Ngữ' ) { %>
+                                        <% linkPath='/categories/language' ; %>
+                                            <% } else if (information.linkCategorie==='Thủ Thuật' ) { %>
+                                                <% linkPath='/categories/trick' ; %>
+                                                    <% } else if (information.linkCategorie==='Data Base' ) { %>
+                                                        <% linkPath='/categories/database' ; %>
+                                                            <% } %>
+                                                                <a href="<%= linkPath %>">
+                                                                    <h2 class="bg-category-name">
+                                                                        <%= information.linkCategorie %>
+                                                                    </h2>
+                                                                </a>
+                            </div>
+                            <a class="container-item" href="/post/<%= information.id %>">
+                                <!-- <div class="bg-container"> -->
+                                <img class="container-item-img" src="<%= information.image %>" alt="">
+
+                                <div class="container-item-timesee">
+                                    <small class="time">
+                                        <i class="ti-timer"></i>
+                                        <%= information.timeAgo %>
+                                    </small>
+                                    <small>
+                                        <i class="ti-eye"></i>
+                                        <%= information.views %>
+                                    </small>
+                                </div>
+                                <h2 class="container-item-name">
+                                    <%= information.nameInformation %>
+                                </h2>
+                                <div class="container-item-footer">
+                                    <div class="author">
+                                        <img class="avatar-img" src="/images/avatar.png" alt="">
+                                        <div class="name-avatar">Vũ Duy Ngự</div>
+                                    </div>
+                                    <div class="item-footer-like">
+                                        <i class="ti-heart"></i>
+                                    </div>
+                                </div>
+
+                                <!-- </div> -->
+                            </a>
+                        </div>
+                      <% }); %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+ 
+
+            <%- include('./partials/footer') %>
+
+                <!-- Modal tim kiem-->
+            <%- include('./partials/modalSearch') %>
+
+</body>
+
+</html>
