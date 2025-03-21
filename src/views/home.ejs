@@ -9,39 +9,41 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/main.js">
-    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css" </head>
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css"> 
+</head>
 
 <body>
     <!-- <%= JSON.stringify(listUsers) %> -->
 
     <%- include('./partials/header') %>
 
-        <%- include('partials/slideshow') %>
+    <%- include('partials/slideshow') %>
 
-            <div id="main-container" class="container">
-                <div class="grid">
-                    <div class="grid__row">
-                        <% listUsers.forEach(function(information) { %>
-                            <div class="grid__column-3">
+        <div id="main-container" class="container">
+            <div class="grid">
+                <div class="grid__row">
+                    <% listUsers.forEach(function(information) { %>
+                        <div class="grid__column-3">
+                            <div class="item">
                                 <div class="bg-category">
                                     <% let linkPath='' ; %>
-                                        <% if (information.linkCategorie==='Ngôn Ngữ' ) { %>
-                                            <% linkPath='/categories/language' ; %>
-                                                <% } else if (information.linkCategorie==='Thủ Thuật' ) { %>
-                                                    <% linkPath='/categories/trick' ; %>
-                                                        <% } else if (information.linkCategorie==='Data Base' ) { %>
-                                                            <% linkPath='/categories/database' ; %>
-                                                                <% } %>
-                                                                    <a href="<%= linkPath %>">
-                                                                        <h2 class="bg-category-name">
-                                                                            <%= information.linkCategorie %>
-                                                                        </h2>
-                                                                    </a>
+                                    <% if (information.linkCategorie==='Ngôn Ngữ' ) { %>
+                                    <% linkPath='/categories/language' ; %>
+                                    <% } else if (information.linkCategorie==='Thủ Thuật' ) { %>
+                                    <% linkPath='/categories/trick' ; %>
+                                    <% } else if (information.linkCategorie==='Data Base' ) { %>
+                                    <% linkPath='/categories/database' ; %>
+                                    <% } %>
+                                    <a href="<%= linkPath %>">
+                                        <h2 class="bg-category-name">
+                                            <%= information.linkCategorie %>
+                                        </h2>
+                                    </a>
                                 </div>
                                 <a class="container-item" href="/post/<%= information.id %>">
-                                    <!-- <div class="bg-container"> -->
+                                        <!-- <div class="bg-container"> -->
                                     <img class="container-item-img" src="<%= information.image %>" alt="">
-
+    
                                     <div class="container-item-timesee">
                                         <small class="time">
                                             <i class="ti-timer"></i>
@@ -64,19 +66,26 @@
                                             <i class="ti-heart"></i>
                                         </div>
                                     </div>
-
-                                    <!-- </div> -->
                                 </a>
+                                <div class="container-btn">
+                                    <form action="">
+                                        <button class="btn-item">Edit</button>
+                                    </form>
+                                    <form action="/delete/<%= information.id %>" method="post" onsubmit="return confirm('Bạn chắc chắn muốn xóa?');">
+                                        <button class="btn-item">Delete</button>
+                                    </form>
+                                </div>
                             </div>
-                            <% }); %>
-                    </div>
+                        </div>
+                    <% }); %>
                 </div>
             </div>
+        </div>
 
-            <%- include('./partials/footer') %>
+    <%- include('./partials/footer') %>
 
-                <!-- Modal tim kiem-->
-            <%- include('./partials/modalSearch') %>
+    <!-- Modal tim kiem-->
+    <%- include('./partials/modalSearch') %>
 
 </body>
 

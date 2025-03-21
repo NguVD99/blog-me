@@ -10,21 +10,22 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/main.js">
-    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css" </head>
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css">
+</head>
 
 <body>
     <%- include('./partials/header') %>
-                    <div class="post">
-                        <h1 class="name-infor"><%= post.nameInformation %></h1>
-                        <div class="img-infor">
-                            <img src="<%= post.image %>" alt="">
-                        </div>
-                        <p class="p-infor">Danh mục: <%= post.linkCategorie %></p>
-                        <!-- <div >
-                            <i class="ti-eye"></i> <%= post.views %> lượt xem
-                        </div> -->
-                        <a class="link-doc" href="<%= post.linkDocument %>" target="_blank">Xem tài liệu</a>
-                    </div>
+    <div class="post">
+        <h1 class="name-infor"><%= post.nameInformation %></h1>
+        <div class="img-infor">
+            <img src="<%= post.image %>" alt="">
+        </div>
+        <p class="p-infor">Danh mục: <%= post.linkCategorie %></p>
+        <!-- <div >
+            <i class="ti-eye"></i> <%= post.views %> lượt xem
+        </div> -->
+        <a class="link-doc" href="<%= post.linkDocument %>" target="_blank">Xem tài liệu</a>
+    </div>
                     
 
     <%- include('./partials/footer') %>

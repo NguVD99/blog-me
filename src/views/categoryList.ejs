@@ -9,59 +9,62 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/main.js">
-    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css" </head>
+    <link rel="stylesheet" href="/fonts/themify-icons/themify-icons.css">
+</head>
 
 <body>
     <!-- <%= JSON.stringify(listUsers) %> -->
 
     <%- include('./partials/header') %>
 
-        <div id="main-container" class="container">
-            <div class="grid">
-                <div class="grid__row">
-                    <% listUsers.forEach(function(information) { %>
-                        <div class="grid__column-3">
-                            <div class="bg-category">
-                                <a href="">
-                                    <h2 class="bg-category-name">
-                                        <%= information.linkCategorie %>
-                                    </h2>
-                                </a>
-                            </div>
-                            <a class="container-item" href="<%= information.linkDocument %>">
-                                <img class="container-item-img" src="<%= information.image %>" alt="">
-                                <div class="container-item-timesee">
-                                    <small class="time">
-                                        <i class="ti-timer"></i>
-                                        <%= information.timeAgo %>
-                                    </small>
-                                    <small>
-                                        <i class="ti-eye"></i>
-                                        <%= information.views %>
-                                    </small>
-                                </div>
-                                <h2 class="container-item-name">
-                                    <%= information.nameInformation %>
+    <div id="main-container" class="container">
+        <div class="grid">
+            <div class="grid__row">
+                <% listUsers.forEach(function(information) { %>
+                    <div class="grid__column-3">
+                        <div class="item">
+                        <div class="bg-category">
+                            <a href="">
+                                <h2 class="bg-category-name">
+                                    <%= information.linkCategorie %>
                                 </h2>
-                                <div class="container-item-footer">
-                                    <div class="author">
-                                        <img class="avatar-img" src="/images/avatar.png" alt="">
-                                        <div class="name-avatar">Vũ Duy Ngự</div>
-                                    </div>
-                                    <div class="item-footer-like">
-                                        <i class="ti-heart"></i>
-                                    </div>
-                                </div>
                             </a>
                         </div>
-                        <% }); %>
-                </div>
+                        <a class="container-item" href="<%= information.linkDocument %>">
+                            <img class="container-item-img" src="<%= information.image %>" alt="">
+                            <div class="container-item-timesee">
+                                <small class="time">
+                                    <i class="ti-timer"></i>
+                                    <%= information.timeAgo %>
+                                </small>
+                                <small>
+                                    <i class="ti-eye"></i>
+                                    <%= information.views %>
+                                </small>
+                            </div>
+                            <h2 class="container-item-name">
+                                    <%= information.nameInformation %>
+                            </h2>
+                            <div class="container-item-footer">
+                                <div class="author">
+                                    <img class="avatar-img" src="/images/avatar.png" alt="">
+                                    <div class="name-avatar">Vũ Duy Ngự</div>
+                                </div>
+                                <div class="item-footer-like">
+                                    <i class="ti-heart"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    </div>
+                <% }); %>
             </div>
         </div>
+    </div>
 
-        <%- include('./partials/footer') %>
+    <%- include('./partials/footer') %>
 
-        <%- include('./partials/modalSearch') %>
+    <%- include('./partials/modalSearch') %>
 </body>
 
 </html>

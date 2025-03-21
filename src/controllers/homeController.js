@@ -303,7 +303,7 @@ const getSearchPage = async (req, res) => {
             ...item,
             timeAgo: timeAgo(item.createdAt)
         }));
-        console.log(listUsers )
+        // console.log(listUsers )
         res.render('search.ejs', { listUsers });
 
     } catch (err) {
@@ -311,6 +311,37 @@ const getSearchPage = async (req, res) => {
         res.status(500).send('Lỗi khi tìm kiếm');
     }
 };
+
+const postDeleteInformation = async (req, res) => {
+    const id = req.params.id;
+  
+    try {
+      // Nếu dùng MySQL
+      await connection.query('DELETE FROM information WHERE id = ?', [id]);
+  
+      // Sau khi xóa, redirect lại trang chủ (hoặc show thông báo thành công)
+      res.redirect('/');
+    } catch (err) {
+      console.error('Lỗi khi xóa:', err);
+      res.status(500).send('Xóa thất bại!');
+    }
+  };
+
+// const postDeletePage = async (req, res) => {
+//     const userId = req.params.id;
+
+//     let user = await getInformationById(informationId);
+
+//     res.render('delete.ejs', { information: user })
+// }
+
+// const postHandleRemovePage = async (req, res) => {
+//     const id = req.body.id;
+
+//     await deleteInformationById(id);
+
+//     res.redirect('/');
+// }
 
 
 module.exports = {
@@ -326,5 +357,6 @@ module.exports = {
     getListcategory,
     getPostDetail,
     getDetail,
-    getSearchPage
+    getSearchPage,
+    postDeleteInformation
 }
