@@ -1,22 +1,36 @@
 const connection = require('../config/database');
 
 const getAllUsers = async () => {
-    let [results, fields] = await connection.query(`SELECT * FROM information`);
+    const [results] = await connection.query(
+        `SELECT * FROM information WHERE deleted_at IS NULL ORDER BY id DESC`
+    );
     return results;
-}
+};
 
-const getInformationById = async (informationId) => {
-    let [results, fields] = await connection.query(`SELECT * FROM information where id = ?`, [informationId]);
-
-    let user = results && results.length > 0 ? results[0] : {};
-
-    return user;
-}
+const getTrashedUsers = async () => {
+    const [results] = await connection.query(
+        `SELECT * FROM information WHERE deleted_at IS NOT NULL ORDER BY deleted_at DESC`
+    );
+    return results;
+};
 
 const deleteInformationById = async (id) => {
-    let [results, fields] = await connection.query(
-        `DELETE FROM information  WHERE id = ?`, [id]
-    );
-}
+    const now = new Date();
+    await connection.query(`UPDATE information SET deleted_at = ? WHERE id = ?`, [now, id]);
+};
 
-module.exports = { getAllUsers, getInformationById, deleteInformationById }
+const restoreInformationById = async (id) => {
+    await connection.query(`UPDATE information SET deleted_at = NULL WHERE id = ?`, [id]);
+};
+
+const forceDeleteInformationById = async (id) => {
+    await connection.query(`DELETE FROM information WHERE id = ? AND deleted_at IS NOT NULL`, [id]);
+};
+
+module.exports = {
+    getAllUsers,
+    getTrashedUsers,
+    deleteInformationById,
+    restoreInformationById,
+    forceDeleteInformationById
+};

@@ -68,7 +68,7 @@
                                     </div>
                                 </a>
                                 <div class="container-btn">
-                                    <form action="">
+                                    <form action="/edit/<%= information.id %>" method="get">
                                         <button class="btn-item">Edit</button>
                                     </form>
                                     <form action="/delete/<%= information.id %>" method="post" onsubmit="return confirm('Bạn chắc chắn muốn xóa?');">

@@ -12,7 +12,12 @@ const { getHomepage,
     getPostDetail,
     getDetail,
     getSearchPage,
-    postDeleteInformation
+    postDeleteInformation,
+    getTrashPage,
+    postRestoreInformation,
+    postForceDeleteInformation,
+    getEditPage,
+    postUpdateInformation
 
 } = require('../controllers/homeController')
 const router = express.Router();
@@ -43,8 +48,17 @@ router.get('/post/:id', getPostDetail);
 
 router.get('/search', getSearchPage);
 
-router.post('/delete/:id', postDeleteInformation)
+router.post('/delete/:id', postDeleteInformation);
 
+router.get('/trash', getTrashPage);
+
+router.post('/restore/:id', postRestoreInformation);
+
+router.post('/force-delete/:id', postForceDeleteInformation);
+
+router.get('/edit/:id', getEditPage);
+
+router.post('/update/:id', postUpdateInformation);
 // router.post('/delete', postHandleRemovePage)
 
 

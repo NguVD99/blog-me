@@ -427,3 +427,7 @@
     display: none;
 }
 
+
+.not-trash {
+    font-size: 2rem;
+}

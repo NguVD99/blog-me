@@ -1,7 +1,12 @@
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const connection = require('../config/database');
-const { getAllUsers } = require('../services/CRUDService');
+const { getAllUsers,
+        getTrashedUsers,
+        restoreInformationById,
+        forceDeleteInformationById,
+        deleteInformationById
+    } = require('../services/CRUDService');
 
 
 function timeAgo(date) {
@@ -19,7 +24,8 @@ function timeAgo(date) {
       if (count >= 1) return `${count} ${i.label} trước`;
     }
     return 'vừa xong';
-  }
+};
+
 
 
 const getHomepage = async (req, res) => {
@@ -33,7 +39,9 @@ const getHomepage = async (req, res) => {
     });
 
     return res.render('home.ejs', { listUsers: results });
-}
+};
+
+
 
 const getPopularpage = async (req, res) => {
     try {
@@ -51,11 +59,15 @@ const getPopularpage = async (req, res) => {
         console.error('❌ Lỗi trang popular:', err);
         res.status(500).send('Lỗi máy chủ');
       }
-}
+};
+
+
 
 const getCategoriespage = (req, res) => {
-    res.render('categories.ejs')
-}
+    res.render('categories.ejs');
+};
+
+
 
 const getListcategory = async (req, res) => {
     const category = req.params.type;
@@ -86,9 +98,11 @@ const getListcategory = async (req, res) => {
     }
 };
 
+
+
 const getCreatepage = (req, res) => {
-    res.render('create.ejs')
-}
+    res.render('create.ejs');
+};
 
 // const postCreateUser = async (req, res) => {
 //     // console.log('>>>> req.body ', req.body)
@@ -151,13 +165,17 @@ const postCreateUser = async (req, res) => {
     }
 };
 
+
+
 const getLoginpage = (req, res) => {
-    res.render('login.ejs')
-}
+    res.render('login.ejs');
+};
+
+
 
 const postLoginpage = async (req, res) => {
     const { loginname, password } = req.body
-    console.log(req.body)
+    console.log(req.body);
 
     try {
         const [login] = await connection.query(
@@ -166,7 +184,7 @@ const postLoginpage = async (req, res) => {
         );
 
         if (login.length === 0) {
-            return res.send("Tài khoản không tồn tại")
+            return res.send("Tài khoản không tồn tại");
         }
 
         const user = login[0];
@@ -174,9 +192,9 @@ const postLoginpage = async (req, res) => {
         const compare = await bcrypt.compare(password, user.password);
 
         if (compare) {
-            return res.send("Chào mừng bạn đến với trang web")
+            return res.send("Chào mừng bạn đến với trang web");
         } else {
-            return res.send("Mật khẩu không chính ")
+            return res.send("Mật khẩu không chính ");
         }
 
 
@@ -184,12 +202,15 @@ const postLoginpage = async (req, res) => {
         console.error(err);
         return res.status(500).send('LỖI MÁY CHỦ KHI ĐĂNG NHẬP');
     }
-}
+};
+
 
 
 const getRegisterpage = (req, res) => {
-    res.render('register.ejs')
-}
+    res.render('register.ejs');
+};
+
+
 
 const postRegisterpage = async (req, res) => {
     // console.log('>>>> req.body ', req.body)
@@ -201,7 +222,7 @@ const postRegisterpage = async (req, res) => {
 
     const { loginname, fullname, email, password } = req.body
 
-    console.log(req.body)
+    console.log(req.body);
 
     // console.log("loginname = ", myloginname, "fullname = ", myfullname, "email = ", myemail, "password = ", mypassword)
 
@@ -230,7 +251,9 @@ const postRegisterpage = async (req, res) => {
         return res.status(500).send('LỖI MÁY CHỦ KHI TẠO TÀI KHOẢN');
     }
 
-}
+};
+
+
 
 const getDetail = async (req, res) => {
     let results = await getAllUsers();
@@ -243,7 +266,9 @@ const getDetail = async (req, res) => {
     });
 
     return res.render('home.ejs', { listUsers: results });
-}
+};
+
+
 
 const getPostDetail = async (req, res) => {
     const postId = req.params.id;
@@ -312,20 +337,17 @@ const getSearchPage = async (req, res) => {
     }
 };
 
+
 const postDeleteInformation = async (req, res) => {
     const id = req.params.id;
-  
     try {
-      // Nếu dùng MySQL
-      await connection.query('DELETE FROM information WHERE id = ?', [id]);
-  
-      // Sau khi xóa, redirect lại trang chủ (hoặc show thông báo thành công)
-      res.redirect('/');
+        await deleteInformationById(id);
+        res.redirect('/');
     } catch (err) {
-      console.error('Lỗi khi xóa:', err);
-      res.status(500).send('Xóa thất bại!');
+        console.error('Lỗi khi xóa mềm:', err);
+        res.status(500).send('Xóa thất bại!');
     }
-  };
+};
 
 // const postDeletePage = async (req, res) => {
 //     const userId = req.params.id;
@@ -343,6 +365,65 @@ const postDeleteInformation = async (req, res) => {
 //     res.redirect('/');
 // }
 
+const getTrashPage = async (req, res) => {
+    const results = await getTrashedUsers();
+    const listTrash = results.map(user => ({
+        ...user,
+        timeAgo: timeAgo(user.createdAt)
+    }));
+    res.render('trash.ejs', { listTrash });
+};
+
+const postRestoreInformation = async (req, res) => {
+    const id = req.params.id;
+    try {
+        await restoreInformationById(id);
+        res.redirect('/trash');
+    } catch (err) {
+        res.status(500).send('Khôi phục thất bại!');
+    }
+};
+
+const postForceDeleteInformation = async (req, res) => {
+    const id = req.params.id;
+    try {
+        await forceDeleteInformationById(id);
+        res.redirect('/trash');
+    } catch (err) {
+        res.status(500).send('Xóa vĩnh viễn thất bại!');
+    }
+};
+
+const getEditPage = async (req, res) => {
+    const id = req.params.id;
+    try {
+        const [rows] = await connection.query('SELECT * FROM information WHERE id = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).send('Không tìm thấy bài viết');
+        }
+        const post = rows[0];
+        res.render('edit.ejs', { post });
+    } catch (err) {
+        console.error('❌ Lỗi getEditPage:', err);
+        res.status(500).send('Lỗi máy chủ');
+    }
+};
+
+const postUpdateInformation = async (req, res) => {
+    const id = req.params.id;
+    const { nameInformation, image, linkDocument, linkCategorie } = req.body;
+
+    try {
+        await connection.query(
+            `UPDATE information SET nameInformation = ?, image = ?, linkDocument = ?, linkCategorie = ? WHERE id = ?`,
+            [nameInformation, image, linkDocument, linkCategorie, id]
+        );
+        res.redirect(`/post/${id}`);
+    } catch (err) {
+        console.error('❌ Lỗi cập nhật:', err);
+        res.status(500).send('Không thể cập nhật!');
+    }
+};
 
 module.exports = {
     getHomepage,
@@ -358,5 +439,10 @@ module.exports = {
     getPostDetail,
     getDetail,
     getSearchPage,
-    postDeleteInformation
+    postDeleteInformation,
+    getTrashPage,
+    postRestoreInformation,
+    postForceDeleteInformation,
+    getEditPage,
+    postUpdateInformation
 }
