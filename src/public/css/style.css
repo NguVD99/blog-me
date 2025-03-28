@@ -431,3 +431,59 @@
 .not-trash {
     font-size: 2rem;
 }
+
+.user-dropdown a {
+    display: flex;
+    align-items: center; /* Giữ icon và chữ thẳng hàng */
+    gap: 6px; /* Khoảng cách giữa icon và chữ */
+    font-size: 18px; /* Kích thước chữ phù hợp */
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.6);
+    padding: 16px; /* Giữ kích thước giống các icon khác */
+    height: 62px; /* Đảm bảo chiều cao đồng nhất */
+}
+
+/* Điều chỉnh icon trong user dropdown */
+.user-dropdown a i {
+    font-size: 30px; /* Kích thước giống các icon khác */
+    padding: 0; /* Không thêm padding thừa */
+    display: flex;
+    align-items: center;
+}
+
+/* Khi user chưa đăng nhập (chỉ có icon) */
+.navbar_item a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 62px; /* Đảm bảo chiều cao đồng nhất */
+}
+
+/* Dropdown menu */
+.user-dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+    z-index: 1;
+}
+
+.user-dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.user-dropdown .dropdown-menu li {
+    padding: 10px;
+    list-style: none;
+}
+
+.user-dropdown .dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+    display: block;
+}
+
+.user-dropdown .dropdown-menu li a:hover {
+    background-color: #f1f1f1;
+}

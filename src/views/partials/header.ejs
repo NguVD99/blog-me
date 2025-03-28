@@ -42,12 +42,29 @@
                         <i class="ti-trash"></i>
                     </a>
                 </li>
-                <li class="navbar_item">
+                <!-- <li class="navbar_item">
                     <a class="active" href="/login" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="Đăng Nhập">
                         <i class="ti-user"></i>
                     </a>
-
+                </li> -->
+                <li class="navbar_item">
+                    <% if (typeof user !== 'undefined' && user) { %>
+                        <div class="user-dropdown">
+                            <a href="#" class="active">
+                                <i class="ti-user"></i> <%= user.fullname %>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/profile">Xem Hồ Sơ</a></li>
+                                <li><a href="/logout">Đăng Xuất</a></li>
+                            </ul>
+                        </div>
+                    <% } else { %>
+                        <a class="active" href="/login" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Đăng Nhập">
+                            <i class="ti-user"></i>
+                        </a>
+                    <% } %>
+                </li>
             </ul>
 
         </nav>

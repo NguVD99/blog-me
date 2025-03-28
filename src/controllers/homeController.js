@@ -173,13 +173,44 @@ const getLoginpage = (req, res) => {
 
 
 
+// const postLoginpage = async (req, res) => {
+//     const { loginname, password } = req.body
+//     console.log(req.body);
+
+//     try {
+//         const [login] = await connection.query(
+//             `SELECT * FROM listUser WHERE loginname = ?`,
+//             [loginname]
+//         );
+
+//         if (login.length === 0) {
+//             return res.send("Tài khoản không tồn tại");
+//         }
+
+//         const user = login[0];
+
+//         const compare = await bcrypt.compare(password, user.password);
+
+//         if (compare) {
+//             return res.send("Chào mừng bạn đến với trang web");
+//         } else {
+//             return res.send("Mật khẩu không chính ");
+//         }
+
+
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).send('LỖI MÁY CHỦ KHI ĐĂNG NHẬP');
+//     }
+// };
+
+
 const postLoginpage = async (req, res) => {
-    const { loginname, password } = req.body
-    console.log(req.body);
+    const { loginname, password } = req.body;
 
     try {
         const [login] = await connection.query(
-            `SELECT * FROM listUser WHERE loginname = ?`,
+            "SELECT * FROM listUser WHERE loginname = ?",
             [loginname]
         );
 
@@ -192,15 +223,20 @@ const postLoginpage = async (req, res) => {
         const compare = await bcrypt.compare(password, user.password);
 
         if (compare) {
-            return res.send("Chào mừng bạn đến với trang web");
+            // Lưu thông tin user vào session
+            req.session.user = {
+                id: user.id,
+                loginname: user.loginname,
+                fullname: user.fullname,
+                email: user.email
+            };
+            return res.redirect("/");
         } else {
-            return res.send("Mật khẩu không chính ");
+            return res.send("Mật khẩu không chính xác");
         }
-
-
     } catch (err) {
         console.error(err);
-        return res.status(500).send('LỖI MÁY CHỦ KHI ĐĂNG NHẬP');
+        return res.status(500).send("LỖI MÁY CHỦ KHI ĐĂNG NHẬP");
     }
 };
 
@@ -212,47 +248,95 @@ const getRegisterpage = (req, res) => {
 
 
 
+// const postRegisterpage = async (req, res) => {
+//     // console.log('>>>> req.body ', req.body)
+
+//     // const myloginname = req.body.loginname
+//     // const myfullname = req.body.fullname
+//     // const myemail = req.body.email
+//     // const mypassword = req.body.password
+
+//     const { loginname, fullname, email, password } = req.body
+
+//     console.log(req.body);
+
+//     // console.log("loginname = ", myloginname, "fullname = ", myfullname, "email = ", myemail, "password = ", mypassword)
+
+//     const checkSql = `SELECT * FROM listUser WHERE email = "${email}"`;
+
+//     const [result] = await connection.query(checkSql);
+//     if (result.length > 0) {
+//         return res.send('Email đã tồn tại');
+//     }
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+
+//     try {
+//         const [data] = await connection.query(
+//             `INSERT INTO listUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)`,
+//             [loginname, fullname, email, hashedPassword]
+//         );
+
+//         if (data.affectedRows > 0) {
+//             return res.redirect('/');
+//         } else {
+//             return res.status(400).send('TẠO TÀI KHOẢN THẤT BẠI');
+//         }
+//     } catch (err) {
+//         console.error(err);
+//         return res.status(500).send('LỖI MÁY CHỦ KHI TẠO TÀI KHOẢN');
+//     }
+
+// };
+
 const postRegisterpage = async (req, res) => {
-    // console.log('>>>> req.body ', req.body)
-
-    // const myloginname = req.body.loginname
-    // const myfullname = req.body.fullname
-    // const myemail = req.body.email
-    // const mypassword = req.body.password
-
-    const { loginname, fullname, email, password } = req.body
-
-    console.log(req.body);
-
-    // console.log("loginname = ", myloginname, "fullname = ", myfullname, "email = ", myemail, "password = ", mypassword)
-
-    const checkSql = `SELECT * FROM listUser WHERE email = "${email}"`;
-
-    const [result] = await connection.query(checkSql);
-    if (result.length > 0) {
-        return res.send('Email đã tồn tại');
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const { loginname, fullname, email, password } = req.body;
 
     try {
+        const checkSql = "SELECT * FROM listUser WHERE email = ?";
+        const [result] = await connection.query(checkSql, [email]);
+
+        if (result.length > 0) {
+            return res.send("Email đã tồn tại");
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
         const [data] = await connection.query(
-            `INSERT INTO listUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)`,
+            "INSERT INTO listUser (loginname, fullname, email, password) VALUES (?, ?, ?, ?)",
             [loginname, fullname, email, hashedPassword]
         );
 
         if (data.affectedRows > 0) {
-            return res.redirect('/');
+            // Lấy thông tin user sau khi đăng ký
+            const [newUser] = await connection.query("SELECT * FROM listUser WHERE email = ?", [email]);
+
+            // Lưu user vào session
+            req.session.user = {
+                id: newUser[0].id,
+                loginname: newUser[0].loginname,
+                fullname: newUser[0].fullname,
+                email: newUser[0].email
+            };
+
+            return res.redirect("/");
         } else {
-            return res.status(400).send('TẠO TÀI KHOẢN THẤT BẠI');
+            return res.status(400).send("TẠO TÀI KHOẢN THẤT BẠI");
         }
     } catch (err) {
         console.error(err);
-        return res.status(500).send('LỖI MÁY CHỦ KHI TẠO TÀI KHOẢN');
+        return res.status(500).send("LỖI MÁY CHỦ KHI TẠO TÀI KHOẢN");
     }
-
 };
 
+const getLogoutpage = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            return res.status(500).send("LỖI MÁY CHỦ KHI ĐĂNG XUẤT");
+        }
+        res.redirect("/");
+    });
+};
 
 
 const getDetail = async (req, res) => {
@@ -444,5 +528,6 @@ module.exports = {
     postRestoreInformation,
     postForceDeleteInformation,
     getEditPage,
-    postUpdateInformation
+    postUpdateInformation,
+    getLogoutpage
 }

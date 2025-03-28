@@ -17,50 +17,49 @@
 <body>
     <%- include('./partials/header') %>
 
-
-<div class="main">
-    <form action="/update/<%= post.id %>" method="POST" class="form">
-        <h3 class="heading">Chỉnh Sửa Bài Viết</h3>
+    <div class="main">
+        <form action="/update/<%= post.id %>" method="POST" class="form">
+            <h3 class="heading">Chỉnh Sửa Bài Viết</h3>
     
-        <div class="spacer"></div>
+            <div class="spacer"></div>
 
-        <div class="form-group">
-            <label for="myifm" class="form-lable">Tên Bài Học Mới</label>
-            <input type="text" class="form-control" id="nameInformation" name="nameInformation" value="<%= post.nameInformation %>" required/>
-            <span class="form-message"></span>
-        </div>
+            <div class="form-group">
+                <label for="myifm" class="form-lable">Tên Bài Học Mới</label>
+                <input type="text" class="form-control" id="nameInformation" name="nameInformation" value="<%= post.nameInformation %>" required/>
+                <span class="form-message"></span>
+            </div>
 
-        <div class="form-group">
-            <label for="myimg" class="form-lable">Link Ảnh</label>
-            <input type="text" class="form-control" id="image" name="image" value="<%= post.image %>"/>
-            <span class="form-message"></span>
-        </div>
+            <div class="form-group">
+                <label for="myimg" class="form-lable">Link Ảnh</label>
+                <input type="text" class="form-control" id="image" name="image" value="<%= post.image %>"/>
+                <span class="form-message"></span>
+            </div>
 
-        <div class="form-group">
-            <label for="mydo" class="form-lable">Link Thông Tin Bài</label>
-            <input type="text" class="form-control" id="linkDocument" name="linkDocument" value="<%= post.linkDocument %>"/>
-            <span class="form-message"></span>
-        </div>
+            <div class="form-group">
+                <label for="mydo" class="form-lable">Link Thông Tin Bài</label>
+                <input type="text" class="form-control" id="linkDocument" name="linkDocument" value="<%= post.linkDocument %>"/>
+                <span class="form-message"></span>
+            </div>
 
-        <div class="form-group">
-            <div class="mb-3">
-                <label for="linkCategorie" class="form-label">Danh mục</label>
-                <select class="form-select" id="linkCategorie" name="linkCategorie">
-                  <option value="Ngôn Ngữ" <%= post.linkCategorie === 'Ngôn Ngữ' ? 'selected' : '' %>>Ngôn Ngữ</option>
-                  <option value="Thủ Thuật" <%= post.linkCategorie === 'Thủ Thuật' ? 'selected' : '' %>>Thủ Thuật</option>
-                  <option value="Data Base" <%= post.linkCategorie === 'Data Base' ? 'selected' : '' %>>Data Base</option>
-                </select>
-              </div>
-            <span class="form-message"></span>
-        </div>
+            <div class="form-group">
+                <div class="mb-3">
+                    <label for="linkCategorie" class="form-label">Danh mục</label>
+                    <select class="form-select" id="linkCategorie" name="linkCategorie">
+                        <option value="Ngôn Ngữ" <%= post.linkCategorie === 'Ngôn Ngữ' ? 'selected' : '' %>>Ngôn Ngữ</option>
+                        <option value="Thủ Thuật" <%= post.linkCategorie === 'Thủ Thuật' ? 'selected' : '' %>>Thủ Thuật</option>
+                        <option value="Data Base" <%= post.linkCategorie === 'Data Base' ? 'selected' : '' %>>Data Base</option>
+                    </select>
+                </div>
+                <span class="form-message"></span>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a href="/" class="btn btn-secondary">Hủy</a>
-    </form>
-</div>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <a href="/" class="btn btn-secondary">Hủy</a>
+        </form>
+    </div>
 
-<%- include('./partials/footer') %>
-<%- include('./partials/modalSearch') %>
+    <%- include('./partials/footer') %>
+    <%- include('./partials/modalSearch') %>
 
 </body>
 
