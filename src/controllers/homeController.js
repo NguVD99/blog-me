@@ -338,6 +338,15 @@ const getLogoutpage = (req, res) => {
     });
 };
 
+const getProfilepage = (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+
+    res.render('profile.ejs', { user: req.session.user });
+};
+
+
 
 const getDetail = async (req, res) => {
     let results = await getAllUsers();
@@ -529,5 +538,6 @@ module.exports = {
     postForceDeleteInformation,
     getEditPage,
     postUpdateInformation,
-    getLogoutpage
+    getLogoutpage,
+    getProfilepage
 }

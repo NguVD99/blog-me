@@ -18,7 +18,8 @@ const { getHomepage,
     postForceDeleteInformation,
     getEditPage,
     postUpdateInformation,
-    getLogoutpage
+    getLogoutpage,
+    getProfilepage
 
 } = require('../controllers/homeController')
 const router = express.Router();
@@ -44,6 +45,8 @@ router.get('/register', getRegisterpage);
 router.post('/register-user', postRegisterpage);
 
 router.get("/logout", getLogoutpage);
+
+router.get("/profile", getProfilepage);
 
 router.get('/post', getDetail);
 
