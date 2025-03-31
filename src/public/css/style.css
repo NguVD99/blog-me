@@ -487,3 +487,29 @@
 .user-dropdown .dropdown-menu li a:hover {
     background-color: #f1f1f1;
 }
+
+/* .container-profile {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+} */
+
+.name-profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0 0 20px 0;
+}
+
+.profile-card p {
+    font-size: 2rem;
+    margin: 10px 0 10px 0;
+}
+
+.btn {
+    font-size: 2rem;
+    margin: 10px 0 10px 0;
+    border-radius: 5px;
+}

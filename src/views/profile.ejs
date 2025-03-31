@@ -16,13 +16,19 @@
     <%- include('partials/header') %>
 
     <div class="container">
-        <h2>Hồ Sơ Cá Nhân</h2>
-        <div class="profile-card">
-            <p><strong>Tên:</strong> <%= user.fullname %></p>
-            <p><strong>Tên Đăng Nhập:</strong> <%= user.loginname %></p>
-            <p><strong>Email:</strong> <%= user.email %></p>
-            <p><strong>Ngày tạo:</strong> <%= new Date(user.createdAt).toLocaleDateString('vi-VN') %></p>
-            <a href="/edit-profile" class="btn btn-primary">Chỉnh sửa</a>
+        <div class="container-profile">
+            <h2 class="name-profile">Hồ Sơ Cá Nhân</h2>
+            <div class="profile-card">
+                <p><strong>Tên:</strong> <%= user.fullname %></p>
+                <p><strong>Tên Đăng Nhập:</strong> <%= user.loginname %></p>
+                <p><strong>Email:</strong> <%= user.email %></p>
+                <% if (user.created_at) { %>
+                    <p><strong>Ngày tạo:</strong> <%= new Date(user.created_at).toLocaleDateString('vi-VN') %></p>
+                <% } else { %>
+                    <p><strong>Ngày tạo:</strong> Chưa có dữ liệu</p>
+                <% } %>
+                <a href="/edit-profile" class="btn btn-primary">Chỉnh sửa</a>
+            </div>
         </div>
     </div>
 

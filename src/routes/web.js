@@ -65,7 +65,8 @@ router.post('/force-delete/:id', postForceDeleteInformation);
 router.get('/edit/:id', getEditPage);
 
 router.post('/update/:id', postUpdateInformation);
-// router.post('/delete', postHandleRemovePage)
+
+// router.get('/edit-profile/:ID', getEditProfile);
 
 
 module.exports = router;

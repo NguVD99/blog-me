@@ -224,12 +224,8 @@ const postLoginpage = async (req, res) => {
 
         if (compare) {
             // Lưu thông tin user vào session
-            req.session.user = {
-                id: user.id,
-                loginname: user.loginname,
-                fullname: user.fullname,
-                email: user.email
-            };
+            req.session.user = user;
+            
             return res.redirect("/");
         } else {
             return res.send("Mật khẩu không chính xác");
@@ -312,12 +308,7 @@ const postRegisterpage = async (req, res) => {
             const [newUser] = await connection.query("SELECT * FROM listUser WHERE email = ?", [email]);
 
             // Lưu user vào session
-            req.session.user = {
-                id: newUser[0].id,
-                loginname: newUser[0].loginname,
-                fullname: newUser[0].fullname,
-                email: newUser[0].email
-            };
+            req.session.user = newUser[0];
 
             return res.redirect("/");
         } else {
@@ -342,8 +333,23 @@ const getProfilepage = (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     }
-
+    console.log(req.session.user)
     res.render('profile.ejs', { user: req.session.user });
+
+    // if (!req.session.user) {
+    //     return res.redirect('/login');
+    // }
+
+    // let user = { ...req.session.user };
+    // if (user.created_at) {
+    //     user.created_at = new Date(user.created_at).toISOString();
+    // }
+
+    // const created_at = user.created_at;
+    // console.log("Original created_at:", created_at);
+    // console.log("New Date:", new Date(created_at));
+
+    // res.render('profile.ejs', { user });
 };
 
 
