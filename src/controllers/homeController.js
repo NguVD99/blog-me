@@ -352,6 +352,78 @@ const getProfilepage = (req, res) => {
     // res.render('profile.ejs', { user });
 };
 
+const getEditProfile = (req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+    res.render('editProfile.ejs', { user: req.session.user });
+};
+
+const postEditProfile = async (req, res) => {
+    const { loginname, fullname, email } = req.body;
+    const userId = req.session.user.ID;
+
+    console.log(userId)
+
+    try {
+        await connection.query(
+            `UPDATE listUser SET loginname = ?, fullname = ?, email = ? WHERE ID = ?`,
+            [loginname ,fullname, email, userId]
+        );
+
+        // Cập nhật session
+        req.session.user.loginname = loginname;
+        req.session.user.fullname = fullname;
+        req.session.user.email = email;
+
+        res.redirect('/profile');
+    } catch (err) {
+        console.error('❌ Lỗi cập nhật thông tin:', err);
+        res.status(500).send('Không thể cập nhật thông tin cá nhân!');
+    }
+};
+
+const getChangePassword = (req, res) => {
+    if (!req.session.user) return res.redirect('/login');
+    res.render('editProfilePassword.ejs', { user: req.session.user });
+};
+
+const postChangePassword = async (req, res) => {
+    if (!req.session.user) {
+        console.log("Session không có user!");
+        return res.redirect('/login');
+    }
+
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.session.user.ID;
+
+    console.log("User từ session:", req.session.user);  // Kiểm tra dữ liệu session
+
+    try {
+        const [userRows] = await connection.query(
+            `SELECT password FROM listUser WHERE ID = ?`,
+            [userId]
+        );
+
+        console.log("User từ database:", userRows);  // Kiểm tra dữ liệu từ database
+
+        if (userRows.length === 0) return res.status(400).send('Người dùng không tồn tại!');
+
+        const user = userRows[0];
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+
+        if (!isMatch) return res.status(400).send('Mật khẩu cũ không đúng!');
+
+        const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+        await connection.query(
+            `UPDATE listUser SET password = ? WHERE ID = ?`,
+            [hashedNewPassword, userId]
+        );
+
+        res.redirect('/profile');
+    } catch (err) {
+        console.error('❌ Lỗi đổi mật khẩu:', err);
+        res.status(500).send('Không thể đổi mật khẩu!');
+    }
+};
 
 
 const getDetail = async (req, res) => {
@@ -545,5 +617,9 @@ module.exports = {
     getEditPage,
     postUpdateInformation,
     getLogoutpage,
-    getProfilepage
+    getProfilepage,
+    getEditProfile,
+    postEditProfile,
+    getChangePassword,
+    postChangePassword
 }

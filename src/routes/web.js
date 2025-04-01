@@ -19,8 +19,11 @@ const { getHomepage,
     getEditPage,
     postUpdateInformation,
     getLogoutpage,
-    getProfilepage
-
+    getProfilepage,
+    getEditProfile,
+    postEditProfile,
+    getChangePassword,
+    postChangePassword
 } = require('../controllers/homeController')
 const router = express.Router();
 
@@ -65,6 +68,14 @@ router.post('/force-delete/:id', postForceDeleteInformation);
 router.get('/edit/:id', getEditPage);
 
 router.post('/update/:id', postUpdateInformation);
+
+router.get('/edit-profile', getEditProfile);
+
+router.post('/edit-profile', postEditProfile);
+
+router.get('/change-password', getChangePassword);
+
+router.post('/change-password', postChangePassword);
 
 // router.get('/edit-profile/:ID', getEditProfile);
 
