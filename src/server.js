@@ -44,7 +44,6 @@ app.use('/', webRouter);
 
 // Test connection
 
-
 // A simple SELECT query
 // connection.query(
 //     'SELECT * FROM informations u',

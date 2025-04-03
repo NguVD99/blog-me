@@ -513,3 +513,23 @@
     margin: 10px 0 10px 0;
     border-radius: 5px;
 }
+
+.active {
+    text-decoration: none;
+}
+
+/* .active:hover {
+    text-decoration: underline;
+} */
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}

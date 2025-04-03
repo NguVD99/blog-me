@@ -1,10 +1,19 @@
 const connection = require('../config/database');
 
-const getAllUsers = async () => {
+const getAllUsers = async (limit, offset) => {
     const [results] = await connection.query(
-        `SELECT * FROM information WHERE deleted_at IS NULL ORDER BY id DESC`
+        `SELECT * FROM information WHERE deleted_at IS NULL 
+         ORDER BY id DESC LIMIT ? OFFSET ?`,
+        [limit, offset]
     );
     return results;
+};
+
+const getTotalUsers = async () => {
+    const [countRows] = await connection.query(
+        `SELECT COUNT(*) as total FROM information WHERE deleted_at IS NULL`
+    );
+    return countRows[0].total;
 };
 
 const getTrashedUsers = async () => {
@@ -32,5 +41,6 @@ module.exports = {
     getTrashedUsers,
     deleteInformationById,
     restoreInformationById,
-    forceDeleteInformationById
+    forceDeleteInformationById,
+    getTotalUsers
 };

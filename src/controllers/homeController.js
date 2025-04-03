@@ -5,7 +5,9 @@ const { getAllUsers,
         getTrashedUsers,
         restoreInformationById,
         forceDeleteInformationById,
-        deleteInformationById
+        deleteInformationById,
+        getTotalUsers
+        
     } = require('../services/CRUDService');
 
 
@@ -28,17 +30,34 @@ function timeAgo(date) {
 
 
 
+// const getHomepage = async (req, res) => {
+//     let results = await getAllUsers();
+
+//     results = results.map(user => {
+//         return {
+//             ...user,
+//             timeAgo: timeAgo(user.createdAt)
+//         };
+//     });
+
+//     return res.render('home.ejs', { listUsers: results });
+// };
+
 const getHomepage = async (req, res) => {
-    let results = await getAllUsers();
+    const page = parseInt(req.query.page) || 1;
+    const limit = 9;
+    const offset = (page - 1) * limit;
 
-    results = results.map(user => {
-        return {
-            ...user,
-            timeAgo: timeAgo(user.createdAt)
-        };
-    });
+    try {
+        const totalItems = await getTotalUsers();
+        const totalPages = Math.ceil(totalItems / limit);
+        const listUsers = await getAllUsers(limit, offset);
 
-    return res.render('home.ejs', { listUsers: results });
+        res.render("home.ejs", { listUsers, currentPage: page, totalPages });
+    } catch (err) {
+        console.error("❌ Lỗi trang chủ:", err);
+        res.status(500).send("Lỗi máy chủ");
+    }
 };
 
 
@@ -46,7 +65,7 @@ const getHomepage = async (req, res) => {
 const getPopularpage = async (req, res) => {
     try {
         const [results] = await connection.execute(
-          `SELECT * FROM information ORDER BY views DESC LIMIT 10`
+          `SELECT * FROM information ORDER BY views DESC LIMIT 9`
         );
     
         const listUsers = results.map(post => ({
@@ -335,21 +354,6 @@ const getProfilepage = (req, res) => {
     }
     console.log(req.session.user)
     res.render('profile.ejs', { user: req.session.user });
-
-    // if (!req.session.user) {
-    //     return res.redirect('/login');
-    // }
-
-    // let user = { ...req.session.user };
-    // if (user.created_at) {
-    //     user.created_at = new Date(user.created_at).toISOString();
-    // }
-
-    // const created_at = user.created_at;
-    // console.log("Original created_at:", created_at);
-    // console.log("New Date:", new Date(created_at));
-
-    // res.render('profile.ejs', { user });
 };
 
 const getEditProfile = (req, res) => {
